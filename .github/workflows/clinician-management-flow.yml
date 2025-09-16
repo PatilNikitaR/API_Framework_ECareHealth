@@ -1,12 +1,12 @@
 name: Run Clinician Management Flow
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # schedule:
+  #   - cron: '0 0 * * *' # Runs every day at midnight
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
 
 jobs:
   run-clinician-management-flow:
