@@ -1,55 +1,55 @@
-name: Run Clinician Management Flow
+# name: Run Clinician Management Flow
 
-on:
-  schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   schedule:
+#     - cron: '0 0 * * *' # Runs every day at midnight
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-jobs:
-  run-clinician-management-flow:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Run Playwright tests (Clinician Management Flow)
-        run: npx playwright test tests/clinician-management.spec.js
-      - name: Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-      - name: Zip the report
-        if: always()
-        run: zip -r playwright-report.zip playwright-report
-      - name: Send email report
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
-          server_port: ${{ secrets.MAIL_SERVER_PORT }}
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: 'E-Care API Test Report - ${{ github.job }} - ${{ job.status }}'
-          body: |
-            Hi Sainath,
+# jobs:
+#   run-clinician-management-flow:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '20'
+#       - name: Install dependencies
+#         run: npm install
+#       - name: Run Playwright tests (Clinician Management Flow)
+#         run: npx playwright test tests/clinician-management.spec.js
+#       - name: Upload Playwright report
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#       - name: Zip the report
+#         if: always()
+#         run: zip -r playwright-report.zip playwright-report
+#       - name: Send email report
+#         if: always()
+#         uses: dawidd6/action-send-mail@v3
+#         with:
+#           server_address: ${{ secrets.MAIL_SERVER_ADDRESS }}
+#           server_port: ${{ secrets.MAIL_SERVER_PORT }}
+#           username: ${{ secrets.MAIL_USERNAME }}
+#           password: ${{ secrets.MAIL_PASSWORD }}
+#           subject: 'E-Care API Test Report - ${{ github.job }} - ${{ job.status }}'
+#           body: |
+#             Hi Sainath,
 
-            Please find the attached report for the E-Care API test run.
-            The job status was ${{ job.status }}.
+#             Please find the attached report for the E-Care API test run.
+#             The job status was ${{ job.status }}.
 
-            You can view the full run here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+#             You can view the full run here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            Thanks,
-            Your Friendly Test Bot
-          to: sainath.gaikwad@thinkitive.com
-          from: GitHub Actions <actions@github.com>
-          attachments: playwright-report.zip
+#             Thanks,
+#             Your Friendly Test Bot
+#           to: sainath.gaikwad@thinkitive.com
+#           from: GitHub Actions <actions@github.com>
+#           attachments: playwright-report.zip
